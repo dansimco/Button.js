@@ -15,7 +15,8 @@ Button = (function(element,params){
   v = function(){};
   self.events = { mouseover: v,  mousedown: v, click: v,  mouseup: v  };
   for (var key in p){self.events[key] = p[key];}
-  isTouchInside = function(event){
+  isTouchInside = function(e){
+    var event = e.originalEvent;
     if (! event.touches[0] ) return touch_inside;
     touch_inside = false;
 		touchX = event.touches[0].pageX;
@@ -31,8 +32,8 @@ Button = (function(element,params){
       touch_inside = false;
 		}
 		return touch_inside;
-  };  
-  element.addEvents({
+  };
+  element.on({
     mouseover: function(e){
       e.preventDefault();
       e.stopPropagation();
@@ -69,7 +70,9 @@ Button = (function(element,params){
     touchstart: function(e){
       e.preventDefault();
       e.stopPropagation();
-      element_coords = element.getCoordinates();
+      element_coords = element.offset();
+      element_coords.right = element_coords.left + element.width();
+      element_coords.bottom = element_coords.top + element.height();
       element.addClass('mousedown');
       touch_inside = true;
       self.events.mousedown();
@@ -97,6 +100,6 @@ Button = (function(element,params){
       element.removeClass('mousedown');
     }  
   });
-	element.setStyle('-webkit-tap-highlight-color','rgba(255,255,255,0)');
+	element.css({'-webkit-tap-highlight-color':'rgba(255,255,255,0)'});
   return self;
 });
