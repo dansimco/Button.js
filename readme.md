@@ -4,7 +4,7 @@ A General purpose click & touch event handler for mootools and jQuery.
 
 - Prevents click & touch events tripping over eachother
 - Provides touchupinside functionality!
-- Stops event where appropriate
+- Stops event propagation where appropriate
 - Adds event classes as a polyfill for :active etc
 
 Usage:
